@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "invoicer"
+version = "0.1.0"
+description = "A simple streamlit app to test pylnbits library"
+authors = ["waltermaffy <walterm21@proton.me>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+streamlit = "^1.16.0"
+requests = "^2.28.1"
+qrcode = "^7.3.1"
+aiohttp = "^3.8.3"
+pylnbits = "^0.0.3"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
