@@ -5,7 +5,6 @@ from pylnbits.config import Config
 from pylnbits.user_wallet import UserWallet
 from utils import *
 
-c = Config(config_file="config.yml")
 
 async def main():
     
@@ -17,27 +16,30 @@ async def main():
     col1.metric(label='BTC price', value=f"{btc_price} $")
     col2.metric(label='Dollar price', value=f"{dollar_price} SAT")
     
-    st.subheader("Generate Invoice") 
-    
+    st.header("Generate Invoice") 
+    c = Config(config_file="config.yml")
+
     async with ClientSession() as session:
         uw = UserWallet(c, session)
         user_wallet = await uw.get_wallet_details()
         
         st.write(f"User Wallet: {user_wallet}")
+        
         with st.container():
     
             amount_option = st.radio("Invoice type", ["SAT", "DOLLAR"])
             if amount_option == "SAT":
-                st.header("Price in SAT")
+                st.subheader("Price in SAT")
                 tot_sats = st.number_input("Set Invoice Amount in sat", min_value=50, step=50)
                 dollar_value = tot_sats / int(dollar_price)
                 st.metric(label='Dollar Value', value=f"{dollar_value:.4f} $")
             
                 
             if amount_option == "DOLLAR":
-                st.header("Price in Dollar")
+                st.subheader("Price in Dollar")
                 tot_dollar = st.number_input("Set Invoice Amount in $", min_value=0.01, step=0.01)
                 tot_sats = int(tot_dollar * int(dollar_price))
+                dollar_value = tot_sats / int(dollar_price)
                 st.metric(label='Tot Sats', value=f"{tot_sats} SAT")
               
             memo = st.text_input("Memo", value="Demo Invoice")
